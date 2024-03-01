@@ -1,0 +1,94 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  padding-top: 40px;
+  background-color: rgb(14, 32, 85);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+ 
+}
+
+main {
+  background: linear-gradient(0deg, rgba(61,0,166,1) 0%, rgba(144,46,186,1) 100%);;
+  padding: 20px;
+  border-radius: 5px;
+  width: 500px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.603);
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  margin-top: 20px;
+  padding-bottom: 10px;
+}
+
+p {
+  margin: 5px 0;
+}
+
+input::placeholder {
+  font-size: 15px;
+}
+
+h1 {
+  text-align: center;
+  color: white;
+  text-shadow: 0 0 1px rgba(0, 0, 0, 0.663);
+  letter-spacing: 3px;
+  
+}
+
+#getWeather {
+  background: none;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.688));
+}
+
+.weatherForm {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.countryInput {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  width: 100%;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.578);
+}
+
+
+.descDisplay {
+  font-weight: 600;
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.tempDisplay, .humidityDisplay{
+  font-weight: 600;
+}
+
+.errorDisplay {
+  font-size: 20px;
+  font-weight: 600;
+  background-color: red;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.546);
+}
+
+img {
+  width: 220px;
+  filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.645));
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="css/weather-app.css">
+</head>
+
+<body>
+  <main>
+    <h1>Weather App</h1>
+  <form class="weatherForm">
+    <input type="text" name="" class="countryInput"  placeholder="Enter a city" title="Enter a city">
+    <button id="getWeather" title="Search">🔍</button>
+  </form>
+
+  <div class="card" style="display: none;">
+  </div>
+</main>
+  <script>
+    
+    const getButton = document.getElementById("getWeather");
+    const countryInput = document.querySelector(".countryInput");
+    const weatherForm = document.querySelector(".weatherForm");
+    const apiKey = "306ed06336e5386c62ba0ff43d9dd560";
+    const card = document.querySelector(".card");
+    const subCard = document.querySelector(".sub-card");
+
+    weatherForm.addEventListener("submit", async event => {
+
+      event.preventDefault();
+      
+      const city = countryInput.value;
+      
+
+      if(city) {
+        try {
+         const weatherData = await getWeatherData(city);
+         displayWeatherInfo(weatherData);
+
+        } catch (error) {
+          displayError(error)
+        }
+      }
+      else {
+        displayError("Please enter a city")
+      }
+
+    });
+
+    getButton.addEventListener("keydown", event => {
+      if(event.key === "Enter") {
+        displayWeatherInfo();
+      }
+    })
+
+
+
+
+    async function getWeatherData(city) {
+
+        const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+        const response = await fetch(apiURL);
+        console.log(response);
+
+        if(!response.ok){
+          throw new Error("Could not fetch weather data");
+        } 
+
+        return await response.json();
+    };
+
+    function displayWeatherInfo(data) {
+            console.log(data)
+
+      const {name: city, 
+            main: {temp, humidity}, 
+            weather: [{id, description}]} = data
+
+
+      const countryDisplay = document.createElement("h1");
+      const tempDisplay = document.createElement("p")
+      const humidityDisplay = document.createElement("p");
+      const descDisplay = document.createElement("p");
+      const weatherDisplay = document.createElement("p");
+
+      card.textContent= "";
+      card.style.display = "flex";
+
+      countryDisplay.textContent = city;
+      card.appendChild(countryDisplay);
+
+
+      weatherDisplay.innerHTML = weatherIcon(id);
+      card.appendChild(weatherDisplay);
+
+      descDisplay.textContent = description.toUpperCase();
+      descDisplay.classList.add("descDisplay")
+      card.appendChild(descDisplay);
+
+
+
+      tempDisplay.textContent = `${(temp - 273.15).toFixed(1)}°C`; 
+      tempDisplay.classList.add("tempDisplay")
+      card.appendChild(tempDisplay);
+
+      humidityDisplay.textContent = `Humidity: ${humidity}%`;
+      humidityDisplay.classList.add("humidityDisplay")
+      card.appendChild(humidityDisplay);
+
+
+
+
+
+    };
+
+    function weatherIcon(weatherId) {
+
+      switch(true){
+        case (weatherId >= 200 && weatherId < 300):
+          return `<img src="./weather-img/thunderstorm.png" alt="Thunderstorm">`;
+        case (weatherId >= 300 && weatherId < 400):
+          return `<img src="./weather-img/drizzle.png" alt="Drizzle">`;
+        case (weatherId >= 500 && weatherId < 600):
+          return `<img src="./weather-img/rain.png" alt="Rain">`;
+        case (weatherId >= 600 && weatherId < 700):
+          return `<img src="./weather-img/snow.png" alt="Snow">`;
+        case (weatherId >= 700 && weatherId < 800):
+          return `<img src="./weather-img/atmosphere.png" alt="Atmosphere">`;
+        case (weatherId === 800):
+          return `<img src="./weather-img/clear-sky.png" alt="Clear-sky">`;
+          case (weatherId >= 801 && weatherId < 810):
+          return `<img src="./weather-img/clouds.png" alt="Cloud">`;
+        default:
+          return `<img src="./weather-img/unknown.png" alt="Unknown">`;
+      }
+    };
+
+    function displayError(message) {
+      const errorHTML = document.createElement("p");
+      errorHTML.textContent = message;
+      errorHTML.classList.add("errorDisplay");
+
+      card.textContent = "";
+      card.style.display = "flex";
+      card.appendChild(errorHTML);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Temperature Conversion</title>
+  <link rel="stylesheet" href="css/temp-conversion.css">
+</head>
+<body>
+  <main>
+
+    <div class="container">
+      <h3>A Simple Temperature Conversion</h3>
+
+    <div class="form-field">
+      <input id="textBox" type="number"><br>
+      <input type="radio" name="temp-conversion" id="toFahTemp">
+      <label for="toFahTemp">Celcius ➡️ Fahrenheit</label><br>
+    </div>
+
+    <div class="form-field">
+      <input type="radio" name="temp-conversion" id="toCelTemp">
+      <label for="toCelTemp">Fahrenheit ➡️ Celcius</label><br>
+      <button id="submitBtn">Submit</button>
+    </div>
+    <p id="result"></p>
+    </div>
+
+  </main>
+
+<script>
+  const textBox = document.getElementById('textBox');
+  const toFahTemp = document.getElementById('toFahTemp');
+  const toCelTemp = document.getElementById('toCelTemp');
+  const displayResult = document.getElementById('result');
+  let temp;
+
+  document.getElementById('submitBtn').addEventListener('click', () => {
+    convertTemperature();
+  })
+
+  const convertTemperature = () => {
+
+    if(toFahTemp.checked) {
+        temp = Number(textBox.value);
+        temp = temp * 9 / 5 + 32;
+        displayResult.innerHTML = `${temp.toFixed(1)} °F`;
+
+    } else if(toCelTemp.checked) {
+        temp = Number(textBox.value);
+        temp = (temp - 32) * (5 / 9);
+        displayResult.innerHTML = `${temp.toFixed(1)} °C`;
+
+    } else {
+        displayResult.innerHTML = "Select a unit"
+    }
+  }
+
+</script>  
+</body>
+</html>
